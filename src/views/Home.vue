@@ -1,3 +1,139 @@
 <template>
-    <h1>123</h1>
+  <el-container>
+    <el-header>
+      <el-row type="flex" class="row-bg" justify="space-between" align="middle">
+        <el-col :span="6">
+          <img src="../assets/logo.png" alt />
+        </el-col>
+        <el-col>
+          <h1>品优购后台管理系统</h1>
+        </el-col>
+        <el-col :span="6">
+          <div class="logout">
+            欢迎39期星耀会员
+            <span>退出</span>
+          </div>
+        </el-col>
+      </el-row>
+    </el-header>
+    <el-container>
+      <el-aside width="200px">
+        <el-menu
+          default-active="$route.path"
+          class="el-menu-vertical-demo"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+					:unique-opened="true"
+					:router="true"
+        >
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>用户管理</span>
+            </template>
+            <el-menu-item index="/home/user">
+              <i class="el-icon-menu"></i>
+              <span slot="title">用户管理</span>
+            </el-menu-item>
+          </el-submenu>
+
+					<el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>权限管理</span>
+            </template>
+            <el-menu-item index="1-4-1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">角色列表</span>
+            </el-menu-item>
+						<el-menu-item index="1-4-1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">权限列表</span>
+            </el-menu-item>
+          </el-submenu>
+
+					<el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>商品管理</span>
+            </template>
+            <el-menu-item index="1-4-1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">商品列表</span>
+            </el-menu-item>
+						<el-menu-item index="1-4-1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">分类参数</span>
+            </el-menu-item>
+						<el-menu-item index="1-4-1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">商品分类</span>
+            </el-menu-item>
+          </el-submenu>
+
+					<el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>订单管理</span>
+            </template>
+            <el-menu-item index="1-4-1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">订单列表</span>
+            </el-menu-item>
+          </el-submenu>
+
+					<el-submenu index="5">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>数据统计</span>
+            </template>
+            <el-menu-item index="1-4-1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">数据报表</span>
+            </el-menu-item>
+          </el-submenu>
+          
+        </el-menu>
+      </el-aside>
+      <el-main>
+				<router-view></router-view>
+			</el-main>
+    </el-container>
+  </el-container>
 </template>
+
+<style>
+.el-container .el-header {
+  padding: 0;
+}
+.el-header .row-bg {
+  background-color: #b3c1cd;
+}
+.el-header .row-bg img {
+  width: 200px;
+}
+.el-header .row-bg h1 {
+  color: #fff;
+  font-size: 28px;
+  margin: 0;
+  text-align: center;
+}
+.el-header .row-bg .logout {
+  padding-right: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: right;
+}
+.el-header .row-bg .logout span {
+  color: orange;
+}
+
+.el-container {
+  height: 100%;
+}
+.el-container .el-menu-vertical-demo {
+  height: 100%;
+}
+</style>
+
