@@ -11,7 +11,7 @@
         <el-col :span="6">
           <div class="logout">
             欢迎39期星耀会员
-            <span>退出</span>
+            <span @click="logout">退出</span>
           </div>
         </el-col>
       </el-row>
@@ -127,6 +127,7 @@
 }
 .el-header .row-bg .logout span {
   color: orange;
+  cursor: pointer;
 }
 
 .el-container {
@@ -136,4 +137,16 @@
   height: 100%;
 }
 </style>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      this.$router.push('/login')
+      localStorage.removeItem('token')
+    }
+  }
+}
+</script>
+
 
