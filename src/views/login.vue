@@ -75,7 +75,7 @@ export default {
             data: this.loginForm,
             url: "http://localhost:8888/api/private/v1/login"
           }).then(({data: {data, meta}}) => {
-            console.log(data,meta)
+            // console.log(data,meta)
             if(meta.status === 200) {
               localStorage.setItem("token", data.token)
               this.$router.push("/home")
