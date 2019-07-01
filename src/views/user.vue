@@ -13,7 +13,7 @@
           placeholder="请输入内容"
           v-model="searchKeywords"
           class="input-with-select"
-          @keyup.native="search"
+          @keyup.enter.native="search"
         >
           <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
         </el-input>
