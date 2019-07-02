@@ -41,7 +41,13 @@
         <template v-slot="{row}">
           <el-button type="primary" plain icon="el-icon-edit" size="mini" @click="editUser(row.id)"></el-button>
           <el-button type="danger" plain icon="el-icon-delete" size="mini" @click="delUser(row.id)"></el-button>
-          <el-button type="success" plain icon="el-icon-check" size="mini">分配角色</el-button>
+          <el-button
+            type="success"
+            plain
+            icon="el-icon-check"
+            size="mini"
+            @click="AssignRole(row.id)"
+          >分配角色</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -91,6 +97,23 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="editUserShow=false">取 消</el-button>
         <el-button type="primary" @click="edit('editForm')">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!-- 分配角色模态框 -->
+    <el-dialog title="分配角色" :visible.sync="AssignRoleShow">
+      <el-form ref="RoleForm" label-width="100px">
+        <el-form-item label="用户名">
+          <el-tag type="info">{{assainRoleData.username}}</el-tag>
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-select v-model="assainRoleData.rid" placeholder="请选择">
+            <el-option v-for="item in roleList" :key="item.id" :label="item.roleName" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="AssignRoleShow=false">取 消</el-button>
+        <el-button type="primary" @click="updateRole">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -168,7 +191,14 @@ export default {
             trigger: "change"
           }
         ]
-      }
+      },
+      AssignRoleShow: false,
+      assainRoleData: {
+        username: "",
+        id: "",
+        rid: ""
+      },
+      roleList: []
     };
   },
   created() {
@@ -334,6 +364,45 @@ export default {
           });
         }
       } catch (err) {}
+    },
+    // 分配角色
+    // 1.点击角色分类按钮，获取这一行的信息
+    async AssignRole(id) {
+      this.AssignRoleShow = true;
+      let res = await this.$http({
+        url: `users/${id}`
+      });
+      // console.log(res)
+      if (res.data.meta.status === 200) {
+        this.assainRoleData = res.data.data;
+      }
+
+      let RoleResult = await this.$http({
+        url: `roles`
+      });
+      // console.log(RoleResult)
+      if (RoleResult.data.meta.status === 200) {
+        this.roleList = RoleResult.data.data;
+      }
+    },
+    // 点击确认按钮，修改角色分配
+    async updateRole() {
+      let res = await this.$http({
+        url: `users/${this.assainRoleData.id}/role`,
+        method: "put",
+        data: {
+          rid: this.assainRoleData.rid
+        }
+      })
+      // console.log(res)
+      if(res.data.meta.status === 200) {
+        this.$message({
+          message: res.data.meta.msg,
+            type: "success",
+            duration: 1000
+        })
+        this.AssignRoleShow = false
+      }
     }
   }
 };
