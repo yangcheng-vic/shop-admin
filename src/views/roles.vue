@@ -97,14 +97,13 @@ export default {
     this.getRolesList();
   },
   methods: {
-    async getRolesList() {
+    async getRolesList(callback) {
       let res = await this.$http({
         url: "roles"
       });
       // console.log(res);
-      if (res.data.meta.status === 200) {
-        this.rolesData = res.data.data;
-      }
+      this.rolesData = res.data.data;
+      callback && callback();
     },
     // 分配权限
     // 1.点击分配权限按钮弹出模态框，渲染数据
@@ -159,36 +158,29 @@ export default {
     },
     // 删除权限
     async deleteRights(row, id) {
-      // console.log(row, id);
-      let level1Id = [];
-      let level2Id = [];
-      let level3Id = [];
-      row.children.forEach(level1 => {
-        level1Id.push(level1.id)
-        level1.children.forEach(level2 => {
-          level2Id.push(level2.id)
-          level2.children.forEach(level3 => {
-            level3Id.push(level3.id)
-          })
-        })
-      })
-      let ids = [...level1Id, ...level2Id, ...level3Id]
-      ids = ids.filter(v => v !== id).join()
+      // 接口信息
+      //  roles/:id/rights/:rightID
+      // method: delete
       let res = await this.$http({
-        url: `roles/${row.id}/rights`,
-        method: "post",
-        data: {
-          rids: ids
-        }
+        url: `roles/${row.id}/rights/${id}`,
+        method: 'delete'
       })
+      // console.log(res)
       if(res.data.meta.status === 200) {
         this.$message({
-          type: "success",
+          type: 'success',
           message: res.data.meta.msg,
           duration: 1000
-        });
-        this.getRolesList();
+        })
       }
+      // this.getRolesList(() => {
+      //   this.$nextTick(() => {
+      //     this.$refs.RoleAuthorizationTree.toggleRowExpansion(
+      //       this.rolesData.find(v => v.id == row.id), true
+      //     )
+      //   })
+      // })
+      this.getRolesList()
     }
   }
 };
