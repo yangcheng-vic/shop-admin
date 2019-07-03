@@ -898,6 +898,7 @@ type=tree
 | goods_number    | 数量                           | 不能为空 |
 | goods_weight    | 重量                           | 不能为空 |
 | goods_introduce | 介绍                           | 可以为空 |
+| is_promote	  | 是否促销                           | 可以为空 |
 | pics            | 上传的图片临时路径（对象）     | 可以为空 |
 
 - 请求数据
