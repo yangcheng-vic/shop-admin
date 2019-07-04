@@ -7,7 +7,7 @@
       <el-breadcrumb-item>商品列表</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 添加商品按钮 -->
-    <el-button type="success" plain style="margin-top: 10px">添加商品</el-button>
+    <el-button type="success" plain style="margin-top: 10px" @click="$router.push('/goods-add')">添加商品</el-button>
     <!-- 表格 -->
     <el-table :data="goodsList" stripe style="width: 100%">
       <el-table-column type="index"></el-table-column>
@@ -20,6 +20,8 @@
         <el-button type="danger" plain icon="el-icon-delete" size="mini"></el-button>
       </el-table-column>
     </el-table>
+    <!-- 分页器 -->
+    <el-pagination background layout="prev, pager, next" :total="total" :current-page="pagenum" :page-size="pagesize" @current-change="changePage"></el-pagination>
   </div>
 </template>
 
@@ -29,7 +31,8 @@ export default {
     return {
       goodsList: [],
       pagenum: 1,
-      pagesize: 6
+      pagesize: 6,
+      total: 0
     };
   },
   async created() {
@@ -44,8 +47,13 @@ export default {
           pagesize: this.pagesize
         }
       });
-      console.log(res);
-      this.goodsList = res.data.data.goods;
+      // console.log(res)
+      this.goodsList = res.data.data.goods
+      this.total = res.data.data.total
+    },
+    changePage(page) {
+      this.pagenum = page
+      this.getGoodslList()
     }
   }
 };
