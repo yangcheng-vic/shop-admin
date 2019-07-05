@@ -63,10 +63,10 @@
     <!-- 添加分类模态框 -->
     <el-dialog title="添加分类" :visible.sync="isAddCateShow">
       <el-form :model="cateList" label-width="100px" ref="addCateForm">
-        <el-form-item label="分类名称">
+        <el-form-item label="分类名称" prop="cat_name">
           <el-input v-model="cateList.cat_name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="父级分类">
+        <el-form-item label="父级分类" prop="parentArr">
           <el-cascader :props="defaultProps" v-model="cateList.parentArr" :options="cateOptions"></el-cascader>
         </el-form-item>
       </el-form>

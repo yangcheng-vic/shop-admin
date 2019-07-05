@@ -15,7 +15,14 @@ axios.interceptors.request.use(function (config) {
     // console.log(config)
     config.headers.Authorization = localStorage.getItem("token")
     return config;
-  });
+})
+axios.interceptors.response.use(function(response) {
+  if (response.data.meta.status === 401) {
+    router.push('/login')
+  }
+  return response
+})
+
 
 Vue.use(ElementUI)
 

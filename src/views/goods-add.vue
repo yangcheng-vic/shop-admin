@@ -14,7 +14,7 @@
     </el-steps>
     <!-- tab栏 -->
     <el-tabs
-      :value="activeName"
+      v-model="activeName"
       tab-position="left"
       style="margin-top: 20px"
       @tab-click="changeTab"
@@ -156,4 +156,10 @@ export default {
   }
 };
 </script>
+<style>
+  .ql-container {
+    height: 200px;
+  }
+</style>
+
 
